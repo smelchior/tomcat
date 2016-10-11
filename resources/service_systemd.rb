@@ -22,9 +22,8 @@ property :instance_name, String, name_property: true
 property :install_path, String
 property :tomcat_user, String, default: lazy { |r| "tomcat_#{r.instance_name}" }
 property :tomcat_group, String, default: lazy { |r| "tomcat_#{r.instance_name}" }
-property :env_vars, Array, default: [
-  { 'CATALINA_PID' => '$CATALINA_BASE/bin/tomcat.pid' }
-]
+property :env_vars, Array, default: []
+property :pid_file, String, default: lazy { |r| "/opt/tomcat_#{r.instance_name}/bin/tomcat.pid" }
 property :sensitive, [true, false], default: false
 
 action :start do
@@ -87,7 +86,8 @@ action_class.class_eval do
         env_vars: new_resource.env_vars,
         install_path: derived_install_path,
         user: new_resource.tomcat_user,
-        group: new_resource.tomcat_group
+        group: new_resource.tomcat_group,
+        pid_file: new_resource.pid_file
       )
       cookbook 'tomcat'
       owner 'root'

@@ -5,16 +5,19 @@ Description=<%= @instance %> Apache Tomcat Application
 After=syslog.target network.target
 
 [Service]
-Type=simple
+Type=forking
 
+Environment="CATALINA_PID=<%= @pid_file %>"
 <% @env_vars.each do |h| -%>
   <% h.each_pair do |k,v| -%>
 Environment="<%= k -%>=<%= v %>"
   <% end -%>
 <% end -%>
 
-ExecStart=<%= @install_path %>/bin/catalina.sh run
-ExecStop=<%= @install_path %>/bin/catalina.sh stop
+PIDFile=<%= @pid_file %>
+
+ExecStart=<%= @install_path %>/bin/catalina.sh start
+ExecStop=<%= @install_path %>/bin/catalina.sh stop 120 -force
 Restart=on-failure
 RestartSec=2
 
