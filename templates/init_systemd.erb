@@ -18,6 +18,7 @@ PIDFile=<%= @pid_file %>
 
 ExecStart=<%= @install_path %>/bin/catalina.sh start
 ExecStop=<%= @install_path %>/bin/catalina.sh stop 120 -force
+SuccessExitStatus=0 143
 Restart=on-failure
 RestartSec=2
 

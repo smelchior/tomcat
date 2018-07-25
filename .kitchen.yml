@@ -3,26 +3,22 @@ driver:
 
 provisioner:
   name: chef_zero
-  chef_omnibus_install_options: '-c current'
+  deprecations_as_errors: true
 
 verifier:
   name: inspec
 
 platforms:
-  - name: centos-5.11
-  - name: centos-6.8
-  - name: centos-7.2
-  - name: debian-7.11
-  - name: debian-8.5
-  - name: fedora-24
-    run_list: yum::dnf_yum_compat
-  - name: opensuse-13.2
-  - name: opensuse-leap-42.1
-  - name: ubuntu-12.04
+  - name: centos-6
+  - name: centos-7
+  - name: debian-8
+  - name: debian-9
+  - name: fedora-28
+  - name: opensuse-leap-42
   - name: ubuntu-14.04
   - name: ubuntu-16.04
 
 suites:
-- name: multi-instance
+- name: multi_instance
   run_list:
   - recipe[test]
